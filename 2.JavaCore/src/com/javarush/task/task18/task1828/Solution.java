@@ -20,8 +20,6 @@ public class Solution {
 //        FileWriter fw = new FileWriter(file, true);
 
         OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file, true), "Unicode");
-        BufferedWriter bw = new BufferedWriter(fw);
-
 
         int[] id = new int[8];
         StringBuilder sb = new StringBuilder();
@@ -37,7 +35,7 @@ public class Solution {
         }
 
         for (int x : id) {
-             sb.append((char)x);
+            sb.append((char)x);
         }
 
         ArrayList<int[]> arrayList = new ArrayList<int[]>();
@@ -61,11 +59,12 @@ public class Solution {
         reader.close();
         for (int[] x : arrayList) {
             for (int y : x) {
-                System.out.println(y);
-                bw.write(y);
+                System.out.println((char)y);
+                fw.write((char)y);
             }
         }
-        bw.close();
+        fw.close();
+
 
 
 
