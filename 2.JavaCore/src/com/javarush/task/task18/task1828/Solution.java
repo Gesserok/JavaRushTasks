@@ -12,7 +12,7 @@ public class Solution {
 
     public static void main(String[] args) throws IOException {
 
-        String file = "1.txt";
+        String file = "E:\\1.txt";
 
         char[] chars = new char[0];
         int[] intsLine = new int[0];
@@ -20,6 +20,8 @@ public class Solution {
 //        FileWriter fw = new FileWriter(file, true);
 
         OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file, true), "Unicode");
+        BufferedWriter bw = new BufferedWriter(fw);
+
 
         int[] id = new int[8];
         StringBuilder sb = new StringBuilder();
@@ -59,12 +61,11 @@ public class Solution {
         reader.close();
         for (int[] x : arrayList) {
             for (int y : x) {
-                System.out.println((char)y);
-                fw.write((char)y);
+                System.out.println(y);
+                bw.write(y);
             }
         }
-        fw.close();
-        fw.close();
+        bw.close();
 
 
 
