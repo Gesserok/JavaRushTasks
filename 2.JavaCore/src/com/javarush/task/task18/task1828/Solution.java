@@ -5,99 +5,144 @@ package com.javarush.task.task18.task1828;
 */
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class Solution {
 
 
     public static void main(String[] args) throws IOException {
 
-        String file = "E:\\1.txt";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String file = reader.readLine();
 
-        char[] chars = new char[0];
-        int[] intsLine = new int[0];
 
-//        FileWriter fw = new FileWriter(file, true);
 
-        OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file, true), "Unicode");
+        if (!(args.length == 0)) {
+            if (args[0].equals("-d")) {
 
-        int[] id = new int[8];
+                String sb = argsParse(args);
+                InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "Unicode");
+                char[] buffer = new char[52];
+                OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("12.txt"), "Unicode");
+                while (inputStreamReader.ready()) {
+                    int count = inputStreamReader.read(buffer);
+                    if (!String.valueOf(buffer).startsWith(sb.toString())) {
+                        osw.write(buffer);
+                    }
+                }
+                inputStreamReader.close();
+                osw.close();
+
+                InputStreamReader copyStream = new InputStreamReader(new FileInputStream("12.txt"), "Unicode");
+                OutputStreamWriter copyOsw = new OutputStreamWriter(new FileOutputStream(file), "Unicode");
+
+                while (copyStream.ready()) {
+                    int count = copyStream.read(buffer);
+                    if (!String.valueOf(buffer).startsWith(sb.toString())) {
+                        copyOsw.write(buffer);
+                    }
+                }
+                copyStream.close();
+                copyOsw.close();
+
+            }
+            if (args[0].equals("-u")) {
+
+                String sb = argsParse(args);
+
+                InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "Unicode");
+                char[] buffer = new char[52];
+                OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("E:\\12.txt"), "Unicode");
+                boolean st = false;
+                while (inputStreamReader.ready()) {
+                    int count = inputStreamReader.read(buffer);
+                    if (!String.valueOf(buffer).startsWith(sb)) {
+                        osw.write(buffer);
+                    } else {
+                        int i;
+                        int j =8;
+                        for (i = 0; i < args[2].toCharArray().length; i++) {
+                            buffer[j] = args[2].toCharArray()[i];
+                            j++;
+                        }
+                        if (j !=37 ) {
+                            for (j = j; j < 38; j++) {
+                                buffer[j] = ' ';
+                            }
+                        }
+                        for (i = 0; i < args[3].toCharArray().length; i++) {
+                            buffer[j] = args[3].toCharArray()[i];
+                            j++;
+                        }
+                            if (j != 45) {
+                                for (j = j; j < 46; j++) {
+                                    buffer[j] = ' ';
+                                }
+                            }
+
+
+                        for (i = 0; i < args[4].toCharArray().length; i++) {
+                            buffer[j] = args[4].toCharArray()[i];
+                                j++;
+                            }
+                            if (j != 49) {
+                                for (j = j; j < 50; j++) {
+                                    buffer[j] = ' ';
+                                }
+                            }
+
+
+
+                        osw.write(buffer);
+
+                    }
+
+                }
+                inputStreamReader.close();
+                osw.close();
+
+                InputStreamReader copyStream = new InputStreamReader(new FileInputStream("E:\\12.txt"), "Unicode");
+                OutputStreamWriter copyOsw = new OutputStreamWriter(new FileOutputStream(file), "Unicode");
+
+                while (copyStream.ready()) {
+                    int count = copyStream.read(buffer);
+                        copyOsw.write(buffer);
+                }
+                copyStream.close();
+                copyOsw.close();
+
+            }
+        }
+
+        File fileName = new File("E:\\12.txt");
+        if (fileName.exists()) {
+            fileName.delete();
+        }
+
+    }
+
+    public static String argsParse (String[] args) {
         StringBuilder sb = new StringBuilder();
-        if (args[0].equals("-d")) {
-            for (int i = 0; i < id.length; i++) {
-                if (i < args[1].toCharArray().length) {
-                    char[] idChars = args[1].toCharArray();
-                    id[i] = (int) ((args[1].toCharArray())[i]);
-                } else  {
-                    id[i] = 32;
+        if (!(args.length == 0)) {
+
+                char[] chars = new char[0];
+                int[] intsLine = new int[0];
+                int[] id = new int[8];
+
+                    for (int i = 0; i < id.length; i++) {
+                        if (i < args[1].toCharArray().length) {
+                            char[] idChars = args[1].toCharArray();
+                            id[i] = (int) ((args[1].toCharArray())[i]);
+                        } else {
+                            id[i] = 32;
+                        }
+                    }
+
+
+                for (int x : id) {
+                    sb.append((char) x);
                 }
-            }
         }
-
-        for (int x : id) {
-            sb.append((char)x);
-        }
-
-        ArrayList<int[]> arrayList = new ArrayList<int[]>();
-        int[] idFromFile = new int[0];
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "Unicode"));
-        while (reader.ready()) {
-            String line = reader.readLine();
-            idFromFile = new int[line.length()];
-            if (!line.isEmpty()) {
-                chars = line.toCharArray();
-                for (int i = 0; i < chars.length; i++) {
-                    idFromFile[i] = (int)chars[i];
-                }
-                if (line.startsWith(sb.toString())) {
-                    System.out.println("OK");
-                } else {
-                    arrayList.add(idFromFile);
-                }
-            }
-        }
-        reader.close();
-        for (int[] x : arrayList) {
-            for (int y : x) {
-                System.out.println((char)y);
-                fw.write((char)y);
-            }
-        }
-        fw.close();
-
-
-
-
-
-
-
-
-
-
-
-
+        return sb.toString();
     }
 }
 
-
-
-/*
-
-
-
-        String file = "E:\\1.txt";
-
-        ByteBuffer bb = ByteBuffer.allocate(BSIZE);
-        IntBuffer ib = bb.asIntBuffer();
-
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "Unicode");
-        while (isr.ready()) {
-            int count = isr.read();
-            ib.put(count);
-        }
-        ib.flip();
-        while (ib.hasRemaining()) {
-            System.out.println(ib.get());
-        }
-
-*/
