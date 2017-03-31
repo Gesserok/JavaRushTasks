@@ -5,10 +5,12 @@ package com.javarush.task.task18.task1828;
 */
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
 
-
+    public static ArrayList<String> stringList = new ArrayList<String>();
+    public static ArrayList<char[]> charList = new ArrayList<char[]>();
     public static void main(String[] args) throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -22,27 +24,27 @@ public class Solution {
                 String sb = argsParse(args);
                 InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "Unicode");
                 char[] buffer = new char[52];
-                OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("12.txt"), "Unicode");
+
                 while (inputStreamReader.ready()) {
                     int count = inputStreamReader.read(buffer);
                     if (!String.valueOf(buffer).startsWith(sb.toString())) {
-                        osw.write(buffer);
+                        charList.add(buffer);
+                        System.out.println(buffer);
                     }
                 }
+
+
+
                 inputStreamReader.close();
+                OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), "Unicode");
+                for (char[] x : charList) {
+                    osw.write(x);
+                    System.out.println(x);
+                }
+
                 osw.close();
 
-                InputStreamReader copyStream = new InputStreamReader(new FileInputStream("12.txt"), "Unicode");
-                OutputStreamWriter copyOsw = new OutputStreamWriter(new FileOutputStream(file), "Unicode");
 
-                while (copyStream.ready()) {
-                    int count = copyStream.read(buffer);
-                    if (!String.valueOf(buffer).startsWith(sb.toString())) {
-                        copyOsw.write(buffer);
-                    }
-                }
-                copyStream.close();
-                copyOsw.close();
 
             }
             if (args[0].equals("-u")) {
