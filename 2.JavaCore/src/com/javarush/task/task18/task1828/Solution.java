@@ -31,7 +31,7 @@ public class Solution {
                     String lineInFile = String.copyValueOf(idInFile);
 
                     if (!lineInFile.startsWith(id)) {
-                        arrayList.add(lineInFile);
+                        arrayList.add(lineInFile.concat("\n"));
                     }
                 }
                 isr.close();
@@ -69,7 +69,7 @@ public class Solution {
                     if (!lineInFile.startsWith(id)) {
                         arrayList.add(lineInFile);
                     } else {
-                        arrayList.add(id.concat(productName).concat(price).concat(quantity));
+                        arrayList.add(id.concat(productName).concat(price).concat(quantity).concat("\n"));
                     }
                 }
                 isr.close();
